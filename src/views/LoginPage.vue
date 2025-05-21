@@ -1,6 +1,6 @@
 <template>
 <ion-page class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-400 via-indigo-400 to-purple-400">
-    <ion-content :fullscreen="true" class="flex items-center justify-center min-h-screen bg-transparent">
+    <ion-content :fullscreen="true" scroll-y="true" class="flex items-center justify-center min-h-screen bg-transparent">
         <div class="w-screen h-screen flex items-center justify-center bg-gray-100">
             <div class="w-full max-w-md p-8 rounded-3xl shadow-2xl bg-white/80 backdrop-blur-md flex flex-col gap-8 relative">
                 <!-- Decorative Circles -->

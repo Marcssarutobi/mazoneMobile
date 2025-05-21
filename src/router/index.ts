@@ -10,7 +10,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
     name: 'Home',
-    component: HomePage
+    component: HomePage,
+    meta: { noTransition: false }
   },
   {
     path: '/login',
@@ -25,7 +26,18 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/liste',
     name: 'ListePage',
-    component: () => import('../views/ListePage.vue')
+    component: () => import('../views/ListePage.vue'),
+    meta: { noTransition: false }
+  },
+  {
+    path: '/signal',
+    name: 'SignalForm',
+    component: () => import('../views/SignalForm.vue')
+  },
+  {
+    path: '/single',
+    name: 'SingleSignal',
+    component: () => import('../views/SingleSignal.vue')
   },
 ]
 

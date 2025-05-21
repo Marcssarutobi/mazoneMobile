@@ -22,18 +22,19 @@
           v-for="report in filteredReports"
           :key="report.id"
           class="bg-white rounded-xl shadow-sm p-4 flex justify-between items-center hover:bg-gray-50 transition"
+          @click="$router.push('/single')"
         >
           <div>
             <div class="text-sm font-medium text-gray-800">{{ report.title }}</div>
             <div class="text-xs text-gray-500">{{ report.date }}</div>
           </div>
-          <ion-icon :icon="chevronForwardOutline" class="text-gray-300 text-lg"></ion-icon>
+          <ion-icon @click="$router.push('/single')" :icon="chevronForwardOutline" class="text-gray-300 text-lg"></ion-icon>
         </div>
       </div>
 
       <!-- Bouton flottant + -->
       <button
-        @click="addReport"
+        @click="$router.push('/signal')"
         class="fixed bottom-[70px] right-6 w-14 h-14 rounded-full bg-blue-600 text-white shadow-lg flex items-center justify-center text-2xl hover:bg-blue-700 transition"
         aria-label="Ajouter un signalement"
         style="border-radius: 50%;"
@@ -98,8 +99,8 @@ const filteredReports = computed(() =>
 );
 
 // Fonction pour gérer le clic du bouton +
-function addReport() {
-  // Ici tu peux ouvrir un modal ou router vers une page d'ajout
-  alert('Ajouter un nouveau signalement !');
-}
+// function addReport() {
+//   // Ici tu peux ouvrir un modal ou router vers une page d'ajout
+//   alert('Ajouter un nouveau signalement !');
+// }
 </script>
