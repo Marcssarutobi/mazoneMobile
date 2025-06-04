@@ -2,7 +2,7 @@
   <ion-page>
     <!-- Header -->
     <ion-header :translucent="true" class="ion-padding-top bg-blue-50">
-      <ion-toolbar class="px-4 py-3" style="margin-top: 20px;">
+      <ion-toolbar class="px-4 py-3" >
         <div class="w-full flex justify-between items-center">
           <div class="text-base font-semibold text-blue-800">
             Bienvenue <span class="text-primary">John Doe</span>

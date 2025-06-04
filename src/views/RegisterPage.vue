@@ -17,18 +17,30 @@
                 <!-- Title -->
                 <h2 class="text-3xl font-bold text-center text-gray-800 z-10">Inscription</h2>
                 <!-- Form -->
-                <form class="flex flex-col gap-6 z-10">
+                <form class="flex flex-col gap-6 z-10" @submit.prevent="AddCitoyen">
                     <ion-item lines="none" class=" px-0">
-                        <ion-label position="floating" class="text-gray-500">Username</ion-label>
-                        <ion-input type="text" required class="mt-1"></ion-input>
+                        <ion-label position="floating" class="text-gray-500">Nom</ion-label>
+                        <ion-input type="text" v-model="data.nom" required class="mt-1"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none" class=" px-0">
+                        <ion-label position="floating" class="text-gray-500">Prénom</ion-label>
+                        <ion-input type="text" v-model="data.prenom" required class="mt-1"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none" class=" px-0">
+                        <ion-label position="floating" class="text-gray-500">Téléphone</ion-label>
+                        <ion-input type="text" v-model="data.telephone" required class="mt-1"></ion-input>
                     </ion-item>
                     <ion-item lines="none" class=" px-0">
                         <ion-label position="floating" class="text-gray-500">Email</ion-label>
-                        <ion-input type="email" required class="mt-1"></ion-input>
+                        <ion-input type="email" v-model="data.email_contact" required class="mt-1"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none" class=" px-0">
+                        <ion-label position="floating" class="text-gray-500">Commune</ion-label>
+                        <ion-input type="text" v-model="data.commune" required class="mt-1"></ion-input>
                     </ion-item>
                     <ion-item lines="none" class=" px-0">
                         <ion-label position="floating" class="text-gray-500">Mot de passe</ion-label>
-                        <ion-input type="password" required class="mt-1"></ion-input>
+                        <ion-input type="password" v-model="data.password" required class="mt-1"></ion-input>
                     </ion-item>
                     <button style="padding: 10px; border-radius: 10px;" type="submit" 
                         class="w-full py-3 px-6 mt-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-xl shadow-md 
@@ -46,7 +58,28 @@
 </template>
 
 <script setup>
+import axiosInstance from '@/plugins/axios';
 import { IonPage, IonContent, IonItem, IonLabel, IonInput } from '@ionic/vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const data = ref({
+    nom:'',
+    prenom:'',
+    commune:'',
+    telephone:'',
+    email_contact:'',
+    password:''
+})
+
+const router = useRouter()
+
+const AddCitoyen = async () =>{
+    const res = await axiosInstance.post('/addcitoyen',data.value)
+    if (res.status === 200) {
+        router.push('/login')
+    }
+}
 
 </script>
 
