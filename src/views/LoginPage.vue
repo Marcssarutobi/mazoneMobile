@@ -17,14 +17,14 @@
                 <!-- Title -->
                 <h2 class="text-3xl font-bold text-center text-gray-800 z-10">Connexion</h2>
                 <!-- Form -->
-                <form class="flex flex-col gap-6 z-10">
+                <form class="flex flex-col gap-6 z-10" @submit.prevent="loginFunction">
                     <ion-item lines="none" class="bg-transparent px-0">
                         <ion-label position="floating" class="text-gray-500">Email</ion-label>
-                        <ion-input type="email" required class="mt-1"></ion-input>
+                        <ion-input type="email" v-model="data.email_contact" required class="mt-1"></ion-input>
                     </ion-item>
                     <ion-item lines="none" class="bg-transparent px-0">
                         <ion-label position="floating" class="text-gray-500">Mot de passe</ion-label>
-                        <ion-input type="password" required class="mt-1"></ion-input>
+                        <ion-input type="password" v-model="data.password" required class="mt-1"></ion-input>
                     </ion-item>
                     <div class="flex justify-between items-center text-sm">
                         <label class="flex items-center gap-2">
@@ -33,14 +33,14 @@
                         </label>
                         <a href="#" class="text-indigo-500 hover:underline">Mot de passe oublié ?</a>
                     </div>
-                    <router-link
+                    <button
                         style="padding: 10px; border-radius: 10px; text-decoration: none; color: white;"
-                        to="/home"
+                        
                         type="submit"
                         class="w-full py-3 px-6 mt-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-xl shadow-md 
                                hover:scale-105 hover:from-blue-600 hover:to-indigo-700 transition-transform duration-200 flex justify-center items-center text-center text-white">
                         Se connecter
-                    </router-link>
+                    </button>
                     <p class="text-center text-gray-600">Pas encore de compte ? 
                         <router-link to="/register" class="text-indigo-500 hover:underline">Inscrivez-vous</router-link>
                     </p>
@@ -52,7 +52,24 @@
 </template>
 
 <script setup>
+import axiosInstance from '@/plugins/axios';
 import { IonPage, IonContent, IonItem, IonLabel, IonInput } from '@ionic/vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+    const data = ref({
+        email_contact:'',
+        password:''
+    })
+    const router = useRouter()
+
+    const loginFunction = async () =>{
+        const res = await axiosInstance.post('/login',data.value)
+        if (res.status === 200) {
+            localStorage.setItem('token', res.data.token);
+            router.push('/home')
+        }
+    }
 
 </script>
 

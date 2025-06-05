@@ -54,6 +54,36 @@
             </select>
           </div>
 
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Quartier</label>
+            <input
+              v-model="form.quartier"
+              type="text"
+              class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              placeholder="Ex: Sèkandjie"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Latitude</label>
+            <input
+              v-model="form.latitude"
+              type="text"
+              class="mt-1 w-full p-3 border border-gray-300 rounded-xl bg-gray-100"
+              readonly
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Longitude</label>
+            <input
+              v-model="form.longitude"
+              type="text"
+              class="mt-1 w-full p-3 border border-gray-300 rounded-xl bg-gray-100"
+              readonly
+            />
+          </div>
+
           <!-- Photo -->
           <div style="margin-top: 25px;">
             <label class="block text-sm font-medium text-gray-700">Photo (optionnel)</label>
@@ -97,6 +127,7 @@ const form = ref({
   title: '',
   description: '',
   category: '',
+  quartier: '',
   photo: null,
 })
 
