@@ -18,7 +18,7 @@
           <div>
             <label class="block text-sm font-medium text-gray-700">Titre</label>
             <input
-              v-model="form.title"
+              v-model="form.titre"
               type="text"
               class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               placeholder="Ex: Trou dans la chaussée"
@@ -42,7 +42,7 @@
           <div>
             <label class="block text-sm font-medium text-gray-700">Catégorie</label>
             <select
-              v-model="form.category"
+              v-model="form.categorie"
               class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               required
             >
@@ -66,6 +66,18 @@
           </div>
 
           <div>
+            <label class="block text-sm font-medium text-gray-700">Commune</label>
+            <input
+              v-model="form.commune"
+              type="text"
+              class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              placeholder="Ex: Cotonou"
+              required
+            />
+          </div>
+
+          
+          <div>
             <label class="block text-sm font-medium text-gray-700">Latitude</label>
             <input
               v-model="form.latitude"
@@ -83,6 +95,15 @@
               readonly
             />
           </div>
+
+          <button
+            @click="getLocation"
+            type="button"
+            style="padding: 10px; border-radius: 10px; text-decoration: none; color: white;"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl"
+          >
+            📍 Obtenir ma position
+          </button>
 
           <!-- Photo -->
           <div style="margin-top: 25px;">
@@ -112,6 +133,7 @@
 </template>
 
 <script setup>
+import axiosInstance from '@/plugins/axios'
 import {
   IonPage,
   IonHeader,
@@ -122,23 +144,56 @@ import {
   IonBackButton,
 } from '@ionic/vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const form = ref({
-  title: '',
+  titre: '',
   description: '',
-  category: '',
+  categorie: '',
+  commune: '',
   quartier: '',
-  photo: null,
+  latitude:'',
+  longitude:'',
+  photo: '',
 })
+
+const error = ref('')
+
+const router = useRouter()
 
 const handleFileUpload = (event) => {
   form.value.photo = event.target.files[0]
 }
 
-const submitForm = () => {
+const submitForm = async () => {
   // Exemple simple de log des données
-  console.log(form.value)
-  alert('Signalement envoyé !')
+  const res = await axiosInstance.post('/addsignal',form.value,{
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+  })
+  if (res.status === 200) {
+    router.push('/liste')
+  }
 }
+
+function getLocation() {
+  if (!navigator.geolocation) {
+    error.value = "La géolocalisation n'est pas supportée par ce navigateur."
+    return
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      form.value.latitude = position.coords.latitude.toFixed(6)
+      form.value.longitude = position.coords.longitude.toFixed(6)
+      error.value = ''
+    },
+    (err) => {
+      error.value = "Impossible de récupérer la position : " + err.message
+    }
+  )
+}
+
 </script>
 
